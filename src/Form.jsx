@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import { memo } from 'react';
-
 
 function Form({ addPost }) {
   const [newPosts, setNewPosts] = useState('');
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  const addPostCallback = useCallback(() => {
     if (newPosts === '') return;
     addPost(newPosts);
     setNewPosts('');
+  }, [newPosts, addPost]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    addPostCallback();
   }
 
   return (
@@ -26,5 +29,12 @@ function Form({ addPost }) {
   );
 }
 
-export default memo(Form)
+export default memo(Form);
+
+
+
+
+
+
+
 
